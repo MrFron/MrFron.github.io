@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>Programa ejemplo M06 4.1(Parte 1)</h1>
+
+    <label for="fnota">Nombre:</label><br>
+    <input type="text" id="fnom" name="fnom" placeholder="Nombre"><br><br>
+
+    <label for="fnota">Nota:</label><br>
+    <input type="number" id="fnota" name="fnota" min="0" step="0.01" maxlength="3" placeholder="Nota"><br><br>
+    
+    <button onclick="aniadir()">
+        Añadir
+    </button>
+    <h2 id="textoConteo"></h2><br><br>
+
+    
+    
+    <button onclick="calcular()">
+        Calcular media
+    </button>
+    
+    <h2 id="textoMedia"></h2><br>
+    <h2 id="fecha"></h2><br>
+
+    <button onclick="ranking()">
+        Mostrar Ranking
+    </button>
+    <h2 id="ranking"></h2><br>
+    
+
+    <script>
+        var notas = [];
+        var conteo = 0;
+
+        function aniadir() {
+            var nota1 = document.getElementById('fnota').value;
+            var nom = document.getElementById('fnom').value;
+            notas.push({nombre: nom, nota: nota1})
+            conteo++;
+            
+            document.getElementById("fnota").value = ""; 
+            document.getElementById("fnom").value = ""; 
+            document.getElementById("textoConteo").innerHTML = "Se han añadido " + conteo + " nota(s).";
+
+        }
+
+        function calcular() {
+
+            var date = new Date();
+            date.setFullYear(2020, 10, 26);
+            var suma = 0;
+            var numero;
+            var notaMedia;
+            
+            for (var i = 0; i < notas.length; i++) {
+                
+                numero = parseFloat(notas[i].nota);
+                suma += numero;
+                
+            }
+
+
+            notaMedia = suma / notas.length;
+
+            document.getElementById("textoMedia").innerHTML = "La nota media de la clase es de " + notaMedia.toFixed(2);
+
+
+            document.getElementById("fecha").innerHTML ="Fecha de creación: " + date.getFullYear() + "/" + (date.getMonth()+1) + "/" + date.getDate();
+            
+        }
+
+        function ranking() {
+
+            notas.sort(function(a, b){return b.nota-a.nota});
+
+            var ranking = "RANKING DE NOTAS:";
+
+            for (var i = 0; i < notas.length; i++) {
+                
+                ranking += "<br>" + notas[i].nombre + ": " + parseFloat(notas[i].nota);
+                
+            }
+
+            document.getElementById("ranking").innerHTML = ranking;
+            
+        }
+        
+
+    </script>
+</body>
+</html>
